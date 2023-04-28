@@ -1,0 +1,31 @@
+﻿<Window x:Class="BoxFileEditor.LoginWnd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFToolkit.Extended"
+        Title="Přihlášení" Height="154.317" Width="360" UseLayoutRounding="True" Topmost="false" ShowInTaskbar="true" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" TextOptions.TextFormattingMode="Display" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" >
+    <Grid Margin="0,0,0,188">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130*"/>
+            <ColumnDefinition Width="47*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="125" VerticalAlignment="Top" Margin="0,0,0,-125" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="37*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0" Grid.ColumnSpan="2">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            </StackPanel>
+            <Label Grid.ColumnSpan="2" Content="Uživatelské jméno:" Height="23" Margin="10,10,229,0" VerticalAlignment="Top" Padding="0" VerticalContentAlignment="Center"/>
+            <Button Content="Přihlásit" Grid.Column="1" Margin="199,87,0,19" Click="btnLogin_Click" HorizontalAlignment="Left" Width="74"/>
+            <TextBox Text="liborsvoboda" x:Name="LoginName" Grid.Column="1" Height="23" Margin="86,10,12,92" Width="185" Padding="0,3,0,0"/>
+            <Label Grid.ColumnSpan="2" Content="Heslo:" Height="23" Margin="10,38,229,0" VerticalAlignment="Top" Padding="0" VerticalContentAlignment="Center"/>
+            <PasswordBox Password="tester2019" x:Name="Password" Grid.Column="1" Height="23" Margin="86,38,12,64" Width="185" Padding="0,3,0,0"/>
+        </Grid>
+    </Grid>
+</Window>

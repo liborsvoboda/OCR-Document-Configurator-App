@@ -1,0 +1,37 @@
+﻿<Window x:Class="BoxFileEditor.SelectedBoxWnd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=WPFToolkit.Extended"
+        Title="Editace pole" ResizeMode="NoResize" Height="320" Width="410.674" UseLayoutRounding="True" WindowStyle="ToolWindow" ShowInTaskbar="False" Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}" TextOptions.TextFormattingMode="Display" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image Source="{Binding SelectedBoxImage}" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="10" />
+        <Grid Grid.Row="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <StackPanel Orientation="Vertical">
+            
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                    <TextBlock Text="X:" VerticalAlignment="Center"/>
+                    <xctk:IntegerUpDown x:Name="udX" Width="60" Margin="3,0,0,0" IsEnabled="{Binding CanEditSingleBox}" Value="{Binding SelectedItem.Left, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <TextBlock Text="Y:" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <xctk:IntegerUpDown x:Name="udY" Width="60" Margin="3,0,0,0" IsEnabled="{Binding CanEditSingleBox}" Value="{Binding SelectedItem.Top, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBlock Text="Šířka:" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <xctk:IntegerUpDown x:Name="udW" Width="60" Margin="3,0,0,0" IsEnabled="{Binding CanEditSingleBox}" Value="{Binding SelectedItem.Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBlock Text="Výška:" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <xctk:IntegerUpDown x:Name="udH" Width="60" Margin="3,0,0,0" IsEnabled="{Binding CanEditSingleBox}" Value="{Binding SelectedItem.Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,5">
+                    <Label Content="Vyberte pole:" VerticalAlignment="Center"/>
+                    <ComboBox Margin="10,0,20,0" SelectedIndex="0" x:Name="comboBoxGroup" Width="130" VerticalAlignment="Center" SelectionChanged="ComboBoxGroupListSelectChanged" ItemsSource="{Binding ComboBoxValueGroup, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding CanEditSingleBox}" />
+                    <ComboBox x:Name="comboBoxGroupSub" Width="130" VerticalAlignment="Center" SelectionChanged="ComboBoxValueListSelectChanged" ItemsSource="{Binding ComboBoxValueList, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,5">
+                    <TextBox Visibility="Hidden" TextChanged="dataFieldValueChanged" x:Name="textBoxValue" Width="0" VerticalAlignment="Center" Text="{Binding SelectedItemValue, Mode=OneWay}" IsEnabled="{Binding CanEditSingleBox}" />
+                    <Button x:Name="btnApply" Content="Zavřít" Padding="10,4" Margin="0,0,0,0" Click="btnApply_Click" IsEnabled="{Binding CanEditSingleBox}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

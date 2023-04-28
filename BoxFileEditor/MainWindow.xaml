@@ -1,0 +1,190 @@
+﻿<Window xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  x:Class="BoxFileEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:BoxFileEditor"
+        Title="{Binding WindowTitle}" MinWidth="530" MinHeight="714" Height="739" Width="800" Loaded="Window_Loaded" UseLayoutRounding="False" Topmost="False" TextOptions.TextFormattingMode="Display"
+        Closing="Window_Closing"
+        >
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="683*"/>
+            <ColumnDefinition Width="109*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ToolBar Grid.Row="0" >
+                <Button MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" x:Name="menuLoad" Margin="5,0,0,0" Opacity="{Binding Path=(local:MainWindow.LoadedBoxOpacity), UpdateSourceTrigger=PropertyChanged}" Click="menuLoad_Click" IsEnabled="{Binding Path=(local:MainWindow.LoadedBox), UpdateSourceTrigger=PropertyChanged}" >
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center">
+                            <Image Source="Images/OpenHS.png" Height="40" Width="25" ToolTip="Načíst obrázek"/>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+
+                <Button MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" x:Name="menuClean" Margin="5,0,0,0" Click="menuClean_Click" Opacity="{Binding Path=(local:MainWindow.LoadedBoxOpacity), UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=(local:MainWindow.LoadedBox), UpdateSourceTrigger=PropertyChanged}" >
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center">
+                            <Image Source="Images/remove.png" Height="40" Width="25" ToolTip="Vyčistit"/>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
+                    <xctk:IntegerUpDown x:Name="udPage" Width="0" Value="{Binding SelPageIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Maximum="{Binding MaxPageIndex}" Minimum="0" />
+                </StackPanel>
+                <Separator Margin="5,0" />
+                <Button MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Opacity="{Binding Path=(local:MainWindow.OpennedFileOpacity), UpdateSourceTrigger=PropertyChanged}" x:Name="menuEmptyBox" Click="btnEmptyBox_Click" IsEnabled="{Binding Path=(local:MainWindow.OpennedFile), UpdateSourceTrigger=PropertyChanged}">
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center">
+                            <Image Source="Images/new_Document.png" Height="45" Width="35" ToolTip="Vložit prázdnou mapu" />
+                        </Grid>
+                    </StackPanel>
+                </Button>
+                <Button MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Opacity="{Binding Path=(local:MainWindow.OpennedFileOpacity), UpdateSourceTrigger=PropertyChanged}" x:Name="menuCreateBox" Click="btnCreateBox_Click" IsEnabled="{Binding Path=(local:MainWindow.OpennedFile), UpdateSourceTrigger=PropertyChanged}">
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center">
+                            <Image Source="Images/generate_Document.png" Height="50" Width="45" ToolTip="Generovat novou mapu"/>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+                <Button MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" x:Name="menuControl" Click="menuControl_Click" Opacity="{Binding Path=(local:MainWindow.LoadedBoxOpacity), UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=(local:MainWindow.LoadedBox), UpdateSourceTrigger=PropertyChanged}" >
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center" >
+                            <Image Source="Images/control_data.png" Height="40" Width="30" ToolTip="Zkontrolovat data"/>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+                <Button MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" x:Name="menuSave" Click="menuSave_Click" Opacity="{Binding Path=(local:MainWindow.LoadedBoxOpacity), UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=(local:MainWindow.LoadedBox), UpdateSourceTrigger=PropertyChanged}" Background="{Binding Path=(local:MainWindow.MenuSaveBackground)}"  >
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center" >
+                            <Image Source="Images/SaveHS.png" Height="40" Width="30" ToolTip="Uložit na server"/>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+                <Separator Margin="5,0" />
+                <Button MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Opacity="{Binding Path=(local:MainWindow.LoadedBoxOpacity), UpdateSourceTrigger=PropertyChanged}" x:Name="menuCreateNew" Click="btnCreateNew_Click" IsEnabled="{Binding Path=(local:MainWindow.LoadedBox), UpdateSourceTrigger=PropertyChanged}">
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center">
+                            <Image Source="Images/add_new.png" Height="50" Width="30" ToolTip="Vytvořit nové pole"/>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+                <Button MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Opacity="0.5" x:Name="menuMerge" Click="btnMerge_Click" IsEnabled="False">
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center">
+                            <Image Source="Images/merge.png" Height="50" Width="30" ToolTip="Sloučit vybraná pole"/>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+                <Button MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Opacity="0.5" x:Name="menuDelete" Click="btnDelete_Click" IsEnabled="False">
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center">
+                            <Image Source="Images/delete_Fields.png" Height="50" Width="40" ToolTip="Smazat vybraná pole"/>
+                        </Grid>
+                    </StackPanel>
+                </Button>
+
+                <Separator Margin="5,0" />
+
+                <StackPanel >
+                    <Label x:Name="docHeightLabel" Content="{Binding Path=(local:MainWindow.DocHeight), UpdateSourceTrigger=PropertyChanged}" />
+                    <Label x:Name="docWidthLabel" Content="{Binding Path=(local:MainWindow.DocWidth), UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </ToolBar>
+            <Button Height="60" Width="50" BorderBrush="Transparent" Background="Transparent" MouseMove="logout_mouseMove" Margin="0,0,64,0" MouseLeave="logout_mouseLeave" x:Name="menuSettings" Click="menuSettings_Click" HorizontalAlignment="Right">
+                <StackPanel>
+                    <Grid HorizontalAlignment="Center">
+                        <Image Source="Images/Settings.png" Height="50" Width="40" ToolTip="Nastavení aplikace"/>
+                    </Grid>
+                </StackPanel>
+            </Button>
+            <Button Height="60" Width="50" BorderBrush="Transparent" Background="Transparent" Margin="0,0,10,0" MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" x:Name="help" Click="help_Click" HorizontalAlignment="Right">
+                <StackPanel>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Image Source="Images/help.png" Height="40" Width="40" ToolTip="Nápověda"/>
+                    </Grid>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="190"/>
+                <ColumnDefinition Width="27*"/>
+
+                <ColumnDefinition Width="190"/>
+            </Grid.ColumnDefinitions>
+            <local:TessImageView Grid.RowSpan="2" Margin="0,0,0,30" Grid.Column="1" x:Name="boxView" Image="{Binding Image}" ItemsSource="{Binding Boxes}" SelectionChanged="boxView_SelectionChanged" MouseDoubleClick="open_boxdetail" BorderThickness="1" BorderBrush="sc# 0.1,0,0,0" DeleteSelected="boxView_DeleteSelected" CreateBox="boxView_CreateBox" MergeSelected="boxView_MergeSelected" Grid.ColumnSpan="2" Height="Auto" VerticalAlignment="Stretch" />
+            <GridSplitter Grid.Column="0" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" HorizontalAlignment="Stretch" Margin="0" />
+            <Label MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Content="Definice Šablon" Grid.Column="0" Padding="5,0,0,0" Margin="0,33,66,0" Height="18" VerticalAlignment="Top" VerticalContentAlignment="Bottom"/>
+            <Label MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Content="Definováná pole" Grid.Column="0" Padding="5,0,0,0" Margin="2,282,65,0" Height="18" VerticalAlignment="Top" VerticalContentAlignment="Bottom"/>
+            <Image x:Name="definitionCopy" Opacity="0.5" MouseUp="templateCopy_Click" IsEnabled="False" MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Source="Images/copy.png" Grid.Column="0" HorizontalAlignment="Center" Height="18" Margin="128,33,0,0" VerticalAlignment="Top" Width="21" Cursor="Hand"/>
+            <Image x:Name="definitionDelete" Opacity="0.5" MouseUp="templateDelete_Click" IsEnabled="False" MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Source="Images/Delete.png" Grid.Column="0" HorizontalAlignment="Left" Height="17" Margin="171,33,0,0" VerticalAlignment="Top" Width="16" RenderTransformOrigin="0.312,0.588" Cursor="Hand"/>
+            <Image x:Name="boxCopy" MouseUp="boxCopy_Click" MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Source="Images/copy.png" Grid.Column="0" Height="18" Margin="150,282,19,0" VerticalAlignment="Top" Cursor="Hand" Width="18" HorizontalAlignment="Left" Opacity="{Binding Path=(local:MainWindow.SelectedOneBoxOpacity), UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=(local:MainWindow.SelectedOneBox), UpdateSourceTrigger=PropertyChanged}"/>
+            <Image x:Name="boxDelete" MouseUp="boxDelete_Click" MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Source="Images/Delete.png" Grid.Column="0" HorizontalAlignment="Left" Height="17" Margin="171,283,0,0" VerticalAlignment="Top" Width="16" RenderTransformOrigin="0.375,13.294" Cursor="Hand" Opacity="{Binding Path=(local:MainWindow.SelectedBoxOpacity), UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=(local:MainWindow.SelectedBox), UpdateSourceTrigger=PropertyChanged}"/>
+            <Image x:Name="definitionCreate" Opacity="0.5" MouseUp="templateCreate_Click" MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Source="Images/new_Document.png" Grid.Column="0" HorizontalAlignment="Left" Height="16" Margin="130,35,0,0" VerticalAlignment="Top" Width="15" Cursor="Hand"/>
+            <Image x:Name="boxCeate" MouseUp="boxCreate_Click" MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Source="Images/new_Document.png" Grid.Column="0" HorizontalAlignment="Left" Height="16" Margin="130,284,0,0" VerticalAlignment="Top" Width="15" Cursor="Hand" Opacity="{Binding Path=(local:MainWindow.LoadedBoxOpacity), UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=(local:MainWindow.LoadedBox), UpdateSourceTrigger=PropertyChanged}"/>
+            <ComboBox x:Name="definitionHeader" SelectedIndex="0" SelectionChanged="definitionHeaderChanged" VerticalContentAlignment="Center" ItemsSource="{Binding Path=(local:MainWindow.DefinitionHeaderList), UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" HorizontalAlignment="Left" Margin="0,2,0,0" VerticalAlignment="Top" Width="187" Height="26"/>
+            <ListBox Grid.Column="0" MouseDoubleClick="templateEdit_Click" SelectionChanged="selectDodumentDefinition" x:Name="definitionTemplate" ItemsSource="{Binding Path=(local:MainWindow.DefinitionTemplateList), UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" BorderBrush="sc# 0.1,0,0,0" Margin="0,54,2,0" Height="223" VerticalAlignment="Top" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding nazev,NotifyOnSourceUpdated=True}" TextAlignment="Left" Margin="2,0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox Grid.Column="0" x:Name="boxList" ItemsSource="{Binding Boxes}" MouseDoubleClick="BoxList_MouseDoubleClick" SelectionChanged="boxList_SelectionChanged" SelectionMode="Extended" BorderThickness="1" BorderBrush="sc# 0.1,0,0,0" Margin="0,302,2,30" Height="Auto" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" >
+                <ListBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ListBox.RenderTransform>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="37"/>
+                                <ColumnDefinition Width="37"/>
+                                <ColumnDefinition Width="27"/>
+                                <ColumnDefinition Width="27"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Value}" TextAlignment="Left" Margin="2,0"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Left}" TextAlignment="Right" Margin="2,0"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Top}" TextAlignment="Right" Margin="2,0"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Width}" TextAlignment="Right" Margin="2,0"/>
+                            <TextBlock Grid.Column="4" Text="{Binding Height}" TextAlignment="Right" Margin="2,0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Grid Grid.Row="1" Grid.ColumnSpan="4" Margin="0,0,0,0" VerticalAlignment="Bottom" Height="30" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <StackPanel DockPanel.Dock="Bottom" Height="20" Margin="0,0,0,5" VerticalAlignment="Bottom">
+                    <Image MouseMove="logout_mouseMove" MouseLeave="logout_mouseLeave" Height="18" Width="23" Margin="5,0,0,0" Source="Images/logout.png" MouseUp="Logout_click" Cursor="Hand" HorizontalAlignment="Left" Stretch="Fill"/>
+                    <Label Margin="33,-17,0,0" HorizontalAlignment="Left" x:Name="statusLabel" Content="{Binding Path=(local:MainWindow.StatusLabelText)}" Padding="0,0,0,0" MinWidth="50" Width="Auto" MaxWidth="250" Height="18"/>
+                    <Label Margin="0,-17,5,0" Padding="0,1,0,0" HorizontalContentAlignment="Right"  Content="{Binding Path=(local:MainWindow.VersionLabelText)}" HorizontalAlignment="Right" Width="100" Height="18"></Label>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>

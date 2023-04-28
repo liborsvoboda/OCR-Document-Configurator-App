@@ -1,0 +1,10 @@
+{
+  "serverIP": "",
+  "loginUrl": "",
+  "refreshUrl": "",
+  "logoutUrl": "",
+  "userInfoUrl": "",
+  "definitionUrl": "",
+  "templateUrl": "",
+  "writeToLog": false
+}
